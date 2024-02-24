@@ -1,0 +1,9 @@
+function Username() {
+  return (
+    <div className="hidden text-sm font-semibold md:block">
+      Nicolas
+    </div>
+  )
+}
+
+export default Username
