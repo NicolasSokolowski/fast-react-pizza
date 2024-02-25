@@ -25,7 +25,7 @@ const fakeCart = [
     quantity: 1,
     unitPrice: 15,
     totalPrice: 15,
-  },
+  }
 ];
 
 function Cart() {
