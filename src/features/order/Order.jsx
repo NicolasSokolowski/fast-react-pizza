@@ -8,19 +8,19 @@ import {
   calcMinutesLeft,
   formatCurrency,
   formatDate,
-} from "../../utils/helpers";
+} from "../../utils/helpers"; // On récupère des fonctions utilitaires
+
 import UpdateOrder from "./UpdateOrder";
 
 function Order() {
   const order = useLoaderData();
 
-  const fetcher = useFetcher();
+  const fetcher = useFetcher(); // Le useFetcher permet ici de réaliser le fetch d'un autre composant (ici Menu)
 
   useEffect(function () {
-    if (!fetcher.data && fetcher.state === "idle") fetcher.load("/menu")
-  }, [fetcher])
+    if (!fetcher.data && fetcher.state === "idle") fetcher.load("/menu") // Si le fetcher est vide ou que son état est "idle", alors on va fetcher les données de la route /menu
+  }, [fetcher]) // L'array de dépendance permet d'exécuter la fonction à chaque fois qu'un élément de l'array est modifié
 
-  // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
   const {
     id,
     status,
@@ -29,7 +29,8 @@ function Order() {
     orderPrice,
     estimatedDelivery,
     cart,
-  } = order;
+  } = order; // On récupère les données de la commande via le loader
+
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
 
   return (
@@ -53,12 +54,12 @@ function Order() {
       </div>
 
       <ul className="divide-y divide-stone-200 border-y">
-        {cart.map((item) => (
-          <OrderItem 
+        {cart.map((item) => ( // On map sur le panier pour afficher chaque item avec le composant OrderItem
+          <OrderItem
             item={item}
             isLoadingIngredients={fetcher.state === "loading"}
-            key={item.pizzaId} 
-            ingredients={fetcher.data?.find((el) => el.id === item.pizzaId).ingredients ?? []}
+            key={item.pizzaId}
+            ingredients={fetcher.data?.find((el) => el.id === item.pizzaId).ingredients ?? []} // On récupère les ingrédients via le useFetcher et on les passe au composant OrderItem
           />
         ))}
       </ul>
@@ -69,7 +70,7 @@ function Order() {
         <p className="font-bold">To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}</p>
       </div>
 
-      {!priority && <UpdateOrder order={order}/>}
+      {!priority && <UpdateOrder order={order} />} {/* Si la commande n'est pas prioritaire, le composant UpdateOrder est render */}
     </div>
   );
 }

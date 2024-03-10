@@ -4,10 +4,10 @@ import DeleteItem from "./DeleteItem";
 import UpdateItemQuantity from "./UpdateItemQuantity";
 import { getCurrentQuantityById } from "./cartSlice";
 
-function CartItem({ item }) {
-  const { pizzaId, name, quantity, totalPrice } = item;
+function CartItem({ item }) { // On reçoit les données par le parent Cart
+  const { pizzaId, name, quantity, totalPrice } = item; // On destructure les données
 
-  const currentQuantity = useSelector(getCurrentQuantityById(pizzaId));
+  const currentQuantity = useSelector(getCurrentQuantityById(pizzaId)); // On récupère la quantité d'une pizza dans le panier
 
   return (
     <li className="py-3 sm:flex sm:items-center sm:justify-between">

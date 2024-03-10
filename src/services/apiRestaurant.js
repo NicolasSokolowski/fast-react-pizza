@@ -1,4 +1,4 @@
-const API_URL = 'https://react-fast-pizza-api.onrender.com/api';
+const API_URL = 'https://react-fast-pizza-api.onrender.com/api'; // URL de l'API
 
 export async function getMenu() {
   const res = await fetch(`${API_URL}/menu`);
@@ -47,7 +47,7 @@ export async function updateOrder(id, updateObj) {
     });
 
     if (!res.ok) throw Error();
-    // We don't need the data, so we don't return anything
+
   } catch (err) {
     throw Error('Failed updating your order');
   }

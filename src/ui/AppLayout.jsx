@@ -16,7 +16,7 @@ function AppLayout() {
 
       <div className="overflow-scroll">
         <main className="mx-auto max-w-3xl">
-          <Outlet />
+          <Outlet /> {/* L'outlet reprend toutes les routes définies comme enfant de AppLayout dans le fichier App.jsx */}
         </main>
       </div>
 

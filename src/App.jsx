@@ -9,20 +9,20 @@ import Order, { loader as orderLoader } from "./features/order/Order";
 import { action as updateOrderAction } from "./features/order/UpdateOrder";
 import AppLayout from "./ui/AppLayout";
 
-const router = createBrowserRouter([
+const router = createBrowserRouter([ // Création d'un router avec la méthode createBrowserRouter de React
   {
-    element: <AppLayout />,
+    element: <AppLayout />, 
     errorElement: <Error />,
     children: [
       {
-        path: "/",
-        element: <Home />
+        path: "/", // URL d'accès
+        element: <Home /> // element définit le composant qui sera render lorsque l'on navigue sur l'url concerné
       },
       {
         path: "/menu",
         element: <Menu />,
-        loader: menuLoader,
-        errorElement: <Error />
+        loader: menuLoader, // Fonction exécutée au chargement du composant
+        errorElement: <Error /> // Le composant qui sera render en cas d'erreur
       },
       {
         path: "/cart",
@@ -31,7 +31,7 @@ const router = createBrowserRouter([
       {
         path: "/order/new",
         element: <CreateOrder />,
-        action: createOrderAction
+        action: createOrderAction // L'action détermine la fonction qui est exécutée en cas de soumission d'un formulaire
       },
       {
         path: "/order/:orderId",
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
 ])
 
 function App() {
-  return <RouterProvider router={router} />
+  return <RouterProvider router={router} /> // On retourne le router avec RouterProvider
 }
 
 export default App

@@ -3,26 +3,29 @@ import getAddress from "../../services/apiGeocoding";
 
 function getPosition() {
   return new Promise(function (resolve, reject) {
+  // On récupère la position de l'utilisateur si celui-ci l'a permis
     navigator.geolocation.getCurrentPosition(resolve, reject);
   });
 }
 
+// Un Thunk est un middleware situé entre le dispatching et le store, il permet d'écrire du code après le dispatch avant qu'il atteigne le reducer du store
 export const fetchAddress = createAsyncThunk("user/fetchAddress", async function () {
-  // 1) We get the user's geolocation position
+  // On a la position de l'utilisateur
   const positionObj = await getPosition();
   const position = {
     latitude: positionObj.coords.latitude,
     longitude: positionObj.coords.longitude,
   };
 
-  // 2) Then we use a reverse geocoding API to get a description of the user's address, so we can display it the order form, so that the user can correct it if wrong
+  // On utilise une API pour avoir plus de détails sur la position de l'utilisateur pour que l'on puisse l'afficher dans le formulaire
   const addressObj = await getAddress(position);
   const address = `${addressObj?.locality}, ${addressObj?.city} ${addressObj?.postcode}, ${addressObj?.countryName}`;
 
-  // 3) Then we return an object with the data that we are interested in
+  // On retourne ensuite un objet avec les données qui nous intéressent
   return { position, address };
 })
 
+// On créé un objet avec l'état initial
 const initialState = {
   username: "",
   status: "idle",
@@ -31,14 +34,15 @@ const initialState = {
   error: ""
 };
 
+// On créé une slice pour l'user
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    updateName(state, action) {
+    updateName(state, action) { // On créé une action pour update le nom
       state.username = action.payload
     }
-  },
+  }, // les extra reducers permettent de répondre à des actions générées ailleurs dans l'application
   extraReducers: (builder) => 
     builder.addCase(
       fetchAddress.pending,
